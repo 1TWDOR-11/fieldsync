@@ -136,8 +136,8 @@ export default function Login() {
                   <label className="label">Função na equipe</label>
                   <div className="row gap-2">
                     {[
-                      { val: 'field', Icon: IcUser, name: 'Técnico de Campo', hint: 'Executa tarefas no campo' },
-                      { val: 'coordinator', Icon: IcShield, name: 'Coordenador', hint: 'Cria e gerencia tarefas' },
+                      { val: 'field',       Icon: IcUser,   name: 'Técnico de Campo', hint: 'Executa tarefas no campo' },
+                      { val: 'coordinator', Icon: IcShield, name: 'Coordenador',        hint: 'Gerencia tarefas e equipes' },
                     ].map(({ val, Icon, name, hint }) => (
                       <button key={val} type="button" onClick={() => setForm(f => ({ ...f, role: val }))}
                         aria-pressed={form.role === val}
