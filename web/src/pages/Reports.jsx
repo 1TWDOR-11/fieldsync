@@ -192,7 +192,7 @@ export default function Reports() {
 
   return (
     <div>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
+      <header className="page-header" style={{ marginBottom: 24 }}>
         <div>
           <h1 style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-strong)' }}>Relatórios</h1>
           <p style={{ color: '#64748B', fontSize: 14, marginTop: 4 }}>Gestão de clientes, projetos e fluxos de equipe</p>
@@ -206,7 +206,7 @@ export default function Reports() {
       </header>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid rgba(var(--ink-rgb),.06)', marginBottom: 24 }}>
+      <div className="tabs-row" style={{ borderBottom: '1px solid rgba(var(--ink-rgb),.06)', marginBottom: 24 }}>
         {[{ id: 'clients', label: 'Clientes', Icon: IcBuilding }, { id: 'projects', label: 'Projetos por equipe', Icon: IcFolder }, { id: 'departments', label: 'Áreas da empresa', Icon: IcLayers }].map(({ id, label, Icon }) => (
           <button key={id} onClick={() => { setTab(id); setSearch(''); }} style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '9px 18px', borderRadius: '8px 8px 0 0', border: 'none', fontSize: 13, fontWeight: 600, cursor: 'pointer', background: tab === id ? 'var(--surface-3)' : 'transparent', color: tab === id ? '#3B82F6' : '#64748B', borderBottom: tab === id ? '2px solid #3B82F6' : '2px solid transparent' }}>
             <Icon size={14} color={tab === id ? '#3B82F6' : '#64748B'} />
@@ -219,7 +219,7 @@ export default function Reports() {
       {tab === 'clients' && (
         <>
           {/* KPI strip */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 24 }}>
+          <div className="grid-kpi-4" style={{ marginBottom: 24 }}>
             {[
               { label: 'Total', value: clientsKpi.total, color: '#3B82F6' },
               { label: 'Ativos', value: clientsKpi.active, color: '#10B981' },
@@ -248,8 +248,8 @@ export default function Reports() {
           </div>
 
           {/* Table */}
-          <div style={{ background: 'var(--surface-3)', borderRadius: 4, border: '1px solid rgba(var(--ink-rgb),.06)', overflow: 'hidden' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+          <div className="table-scroll" style={{ background: 'var(--surface-3)', borderRadius: 4, border: '1px solid rgba(var(--ink-rgb),.06)' }}>
+            <table style={{ width: '100%', minWidth: 560, borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid rgba(var(--ink-rgb),.06)' }}>
                   {['Cliente', 'Segmento', 'Contato', 'Status', 'Projetos', ''].map(h => (
@@ -298,7 +298,7 @@ export default function Reports() {
       {tab === 'projects' && (
         <>
           {/* Team KPI cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 24 }}>
+          <div className="grid-kpi-4" style={{ marginBottom: 24 }}>
             {projectsKpi.map(({ team, label, color, count, active }) => (
               <div key={team} style={{ background: 'var(--surface-3)', borderRadius: 4, padding: '14px 16px', border: '1px solid rgba(var(--ink-rgb),.06)', cursor: 'pointer', outline: teamFilter === team ? `2px solid ${color}` : 'none' }} onClick={() => setTeamFilter(teamFilter === team ? 'all' : team)}>
                 <div style={{ fontSize: 22, fontWeight: 800, color }}>{count}</div>
@@ -404,7 +404,7 @@ export default function Reports() {
       {clientDetail && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(6,13,26,.80)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 150, padding: 24 }} onClick={() => setClientDetail(null)}>
           <div onClick={e => e.stopPropagation()} style={{
-            width: 600, maxWidth: '94vw', maxHeight: '88vh', overflowY: 'auto',
+            width: '100%', maxWidth: 600, maxHeight: '88vh', overflowY: 'auto',
             background: 'var(--surface)', border: '1px solid rgba(var(--ink-rgb),.1)', borderRadius: 4,
             padding: '28px 28px', boxShadow: '0 30px 90px rgba(0,0,0,.55)',
           }}>
@@ -534,7 +534,7 @@ export default function Reports() {
       {/* ─── MODAL ─── */}
       {modal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-          <div style={{ background: 'var(--surface-3)', borderRadius: 4, padding: 28, width: 460, maxHeight: '90vh', overflowY: 'auto', border: '1px solid rgba(var(--ink-rgb),.1)', boxShadow: '0 24px 60px rgba(0,0,0,.5)' }}>
+          <div style={{ background: 'var(--surface-3)', borderRadius: 4, padding: 28, width: '100%', maxWidth: 460, maxHeight: '90vh', overflowY: 'auto', border: '1px solid rgba(var(--ink-rgb),.1)', boxShadow: '0 24px 60px rgba(0,0,0,.5)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 22 }}>
               <h2 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-strong)' }}>
                 {modal.edit ? 'Editar' : modal.type === 'department' ? 'Nova' : 'Novo'} {modal.type === 'client' ? 'cliente' : modal.type === 'project' ? 'projeto' : 'área da empresa'}

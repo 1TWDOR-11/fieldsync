@@ -228,7 +228,8 @@ export default function Tasks() {
 
       {/* ── KANBAN VIEW ── */}
       {view === 'kanban' && (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+        <div className="kanban-wrap">
+        <div className="kanban-board">
           {COLS.map(col => {
             const colTasks = sorted.filter(t => t.status === col);
             return (
@@ -251,6 +252,7 @@ export default function Tasks() {
               </div>
             );
           })}
+        </div>
         </div>
       )}
 

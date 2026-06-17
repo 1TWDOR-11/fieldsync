@@ -153,7 +153,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1.6fr', gap: 12 }}>
+      <div className="grid-kpi-4">
         <KpiCard label="Total" value={stats.total} sub="todas as tarefas" Icon={IcTasks} color={BLUE} />
         <KpiCard label="Pendentes" value={stats.pending} sub="aguardando" Icon={IcClock} color={WARN} />
         <KpiCard label="Em andamento" value={stats.in_progress} sub="em execução" Icon={IcActivity} color={INDG} />
@@ -173,7 +173,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+      <div className="grid-3col">
         <div className="card" style={{ padding: '16px 18px' }}>
           <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-strong)', marginBottom: 3 }}>Tarefas por prioridade</div>
           <div className="text-dim" style={{ fontSize: 11, marginBottom: 8 }}>{allTasks.length} tarefas no total</div>
@@ -204,7 +204,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: 12 }}>
+      <div className="grid-aside-lg">
 
         <div className="card" style={{ overflow: 'hidden' }}>
           <div className="row-between" style={{ padding: '13px 18px', borderBottom: '1px solid var(--border)' }}>

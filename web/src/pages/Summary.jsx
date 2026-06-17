@@ -78,7 +78,7 @@ export default function Summary() {
       </header>
 
       {/* KPI row */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 14, marginBottom: 28 }}>
+      <div className="grid-kpi-5" style={{ marginBottom: 28 }}>
         <KpiCard label="Tarefas totais" value={stats.total} color="#3B82F6" Icon={IcTasks} sub={`${pct}% concluídas`} />
         <KpiCard label="Em andamento" value={stats.in_progress} color="#6366F1" Icon={IcActivity} sub="tarefas ativas" />
         <KpiCard label="Usuários" value={users.length} color="#10B981" Icon={IcUsers} sub={`${coordinators} coord. · ${fieldTechs} técnicos`} />
@@ -86,7 +86,7 @@ export default function Summary() {
         <KpiCard label="Projetos" value={projects.length} color="#EF4444" Icon={IcFolder} sub={`${activeProjects} em andamento`} />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 20 }}>
+      <div className="grid-2col" style={{ gap: 20, marginBottom: 20 }}>
 
         {/* Task progress */}
         <section style={{ background: 'var(--surface-3)', borderRadius: 4, padding: 22, border: '1px solid rgba(var(--ink-rgb),.06)' }}>
@@ -142,7 +142,7 @@ export default function Summary() {
         </section>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20 }}>
+      <div className="grid-aside" style={{ gap: 20 }}>
 
         {/* Recent tasks */}
         <section style={{ background: 'var(--surface-3)', borderRadius: 4, border: '1px solid rgba(var(--ink-rgb),.06)', overflow: 'hidden' }}>

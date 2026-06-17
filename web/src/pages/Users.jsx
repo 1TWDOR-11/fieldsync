@@ -140,7 +140,7 @@ export default function Users() {
 
   return (
     <div>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
+      <header className="page-header" style={{ marginBottom: 24 }}>
         <div>
           <h1 style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-strong)' }}>Usuários</h1>
           <p style={{ color: '#64748B', marginTop: 4, fontSize: 14 }}>{users.length} usuário(s) cadastrado(s)</p>
@@ -158,7 +158,7 @@ export default function Users() {
       )}
 
       {/* KPI strip */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 20 }}>
+      <div className="grid-kpi-3" style={{ marginBottom: 20 }}>
         {[
           { label: 'Total de usuários', value: users.length, color: '#3B82F6', Icon: IcUsers },
           { label: 'Coordenadores', value: users.filter(u => u.role === 'coordinator').length, color: '#6366F1', Icon: IcShield },

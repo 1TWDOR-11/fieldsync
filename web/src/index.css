@@ -346,6 +346,142 @@ option { color: #14171C; background: #fff; }
 .sidebar-footer { padding: 10px 16px 14px; text-align: center; }
 
 /* ══════════════════════════════════════════
+   Responsive grid utilities
+   ══════════════════════════════════════════ */
+.grid-kpi-4    { display: grid; grid-template-columns: 1fr 1fr 1fr 1.6fr; gap: 12px; }
+.grid-kpi-5    { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.grid-kpi-3    { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.grid-2col     { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3col     { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.grid-aside    { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
+.grid-aside-lg { display: grid; grid-template-columns: 3fr 2fr; gap: 12px; }
+
+/* Kanban board */
+.kanban-wrap  { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.kanban-board { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; min-width: 0; }
+
+/* Horizontal-scroll table wrapper */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* Page header row (title + action button) */
+.page-header { display: flex; justify-content: space-between; align-items: flex-start; }
+
+/* Scrollable tabs row */
+.tabs-row { display: flex; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tabs-row > button { white-space: nowrap; flex-shrink: 0; }
+
+/* ══════════════════════════════════════════
+   Layout responsivo — mobile
+   ══════════════════════════════════════════ */
+
+/* Header mobile (hamburguer) — oculto no desktop */
+.mobile-header {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Sidebar vira overlay deslizante */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    z-index: 300;
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+    width: 240px !important;
+  }
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  /* Backdrop escuro atrás do sidebar */
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.6);
+    z-index: 299;
+  }
+  .sidebar-backdrop.sidebar-open {
+    display: block;
+  }
+
+  /* Header mobile fixo no topo */
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 52px;
+    background: #0B0E13;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    padding: 0 16px;
+    z-index: 200;
+  }
+  .mobile-header-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mobile-header-brand-icon {
+    width: 28px; height: 28px; border-radius: 4px;
+    background: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mobile-header-name {
+    font-size: 15px; font-weight: 700;
+    color: #fff; letter-spacing: -.2px;
+  }
+  .hamburger {
+    width: 36px; height: 36px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,.1);
+    background: rgba(255,255,255,.04);
+    display: flex; align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 4px;
+    padding: 9px;
+  }
+  .hamburger span {
+    display: block;
+    width: 100%; height: 2px;
+    background: rgba(255,255,255,.7);
+    border-radius: 2px;
+  }
+
+  /* Conteúdo principal ocupa tela toda e tem padding top para o header */
+  .main-content-area {
+    padding-top: 52px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-bottom: 24px !important;
+  }
+
+  /* ── Grid utilities responsive overrides ── */
+  .grid-kpi-4    { grid-template-columns: 1fr 1fr; }
+  .grid-kpi-5    { grid-template-columns: 1fr 1fr; }
+  .grid-kpi-3    { grid-template-columns: 1fr 1fr; }
+  .grid-2col     { grid-template-columns: 1fr; }
+  .grid-3col     { grid-template-columns: 1fr; }
+  .grid-aside    { grid-template-columns: 1fr; }
+  .grid-aside-lg { grid-template-columns: 1fr; }
+
+  /* Kanban scrolls horizontally on mobile */
+  .kanban-wrap  { margin: 0 -16px; padding: 0 16px; }
+  .kanban-board { grid-template-columns: repeat(3, 260px); overflow-x: auto; padding-bottom: 8px; }
+
+  /* Page header stacks on mobile */
+  .page-header { flex-direction: column; gap: 12px; }
+
+  /* Modal full-width on mobile */
+  .modal-overlay { padding: 10px !important; align-items: flex-end; }
+  .modal { max-height: 92vh !important; border-radius: 8px 8px 0 0 !important; }
+}
+
+/* ══════════════════════════════════════════
    Login — layout responsivo
    ══════════════════════════════════════════ */
 .login-outer {

@@ -90,7 +90,7 @@ export default function Profile() {
           </button>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginTop: 20 }}>
+        <div className="grid-kpi-3" style={{ gap: 8, marginTop: 20 }}>
           <div className="panel" style={{ padding: '9px 11px' }}>
             <div className="row gap-2" style={{ alignItems: 'center', marginBottom: 4 }}>
               <IcCalendar size={11} color="var(--text-dim)" />
@@ -118,7 +118,7 @@ export default function Profile() {
       </div>
 
       {/* Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+      <div className="grid-kpi-3">
         <div className="card row-between" style={{ padding: '16px 18px' }}>
           <div>
             <div className="text-dim" style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.04em', marginBottom: 6 }}>Tarefas atribuídas</div>

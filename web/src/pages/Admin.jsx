@@ -74,7 +74,7 @@ export default function Admin() {
       </div>
 
       {/* Overview KPIs */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+      <div className="grid-kpi-3">
         {stats.map(({ label, value, Icon, to }) => (
           <Link key={label} to={to} className="card row-between" style={{ padding: '16px 18px', textDecoration: 'none' }}>
             <div>
@@ -86,7 +86,7 @@ export default function Admin() {
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 12 }}>
+      <div className="grid-aside">
 
         {/* Activity feed */}
         <div className="card" style={{ overflow: 'hidden' }}>
