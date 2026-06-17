@@ -344,3 +344,70 @@ option { color: #14171C; background: #fff; }
 }
 .sidebar-logout:hover { background: rgba(220,38,38,.12); color: #FCA5A5; border-color: rgba(220,38,38,.3); }
 .sidebar-footer { padding: 10px 16px 14px; text-align: center; }
+
+/* ══════════════════════════════════════════
+   Login — layout responsivo
+   ══════════════════════════════════════════ */
+.login-outer {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 100vh;
+  background: var(--surface);
+}
+.login-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.login-hero {
+  background: #0B1220;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 48px 56px;
+}
+.login-form-panel {
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  padding: 48px 56px;
+  position: relative;
+}
+.login-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 56px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+@media (max-width: 768px) {
+  .login-cols {
+    grid-template-columns: 1fr;
+  }
+  .login-hero {
+    padding: 36px 24px 32px;
+    grid-template-rows: auto;
+  }
+  .login-form-panel {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding: 32px 24px 40px;
+    place-items: start;
+  }
+  .login-form-panel > div {
+    max-width: 100% !important;
+    width: 100%;
+  }
+  .login-footer {
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 24px;
+    text-align: center;
+  }
+  /* Oculta o painel hero em telas muito pequenas se necessário */
+  .login-hero-content-center {
+    align-content: start !important;
+    row-gap: 16px !important;
+  }
+}

@@ -31,11 +31,11 @@ export default function Login() {
   }
 
   return (
-    <div style={{ display: 'grid', gridTemplateRows: '1fr auto', minHeight: '100vh', background: 'var(--surface)' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+    <div className="login-outer">
+      <div className="login-cols">
 
         {/* ── LEFT — informational hero ── */}
-        <div style={{ background: '#0B1220', display: 'grid', gridTemplateRows: 'auto 1fr', padding: '48px 56px' }}>
+        <div className="login-hero">
 
           <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', alignItems: 'center', columnGap: 12, minHeight: 40 }}>
             <Logo size={26} color="white" />
@@ -46,7 +46,7 @@ export default function Login() {
           </div>
 
           {/* Single centered block — mirrors the right panel's centered form block */}
-          <div style={{ display: 'grid', alignContent: 'center', rowGap: 22 }}>
+          <div className="login-hero-content-center" style={{ display: 'grid', alignContent: 'center', rowGap: 22 }}>
             <div style={{ display: 'grid', gridAutoFlow: 'column', justifyContent: 'start', alignItems: 'center', columnGap: 8 }}>
               <span style={{ width: 16, height: 1, background: TEAL, display: 'block' }} />
               <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '.1em', color: TEAL, textTransform: 'uppercase' }}>Plataforma de gestão em campo</span>
@@ -77,7 +77,7 @@ export default function Login() {
         </div>
 
         {/* ── RIGHT — login form ── */}
-        <div style={{ background: 'var(--surface)', borderLeft: '1px solid var(--border)', display: 'grid', placeItems: 'center', padding: '48px 56px', position: 'relative' }}>
+        <div className="login-form-panel">
           <button
             className="sidebar-toggle"
             onClick={toggleTheme}
@@ -184,7 +184,7 @@ export default function Login() {
         </div>
       </div>
 
-      <div className="row-between" style={{ padding: '14px 56px', borderTop: '1px solid var(--border)', background: 'var(--surface)' }}>
+      <div className="login-footer">
         <span style={{ fontSize: 11, color: 'var(--text-dim)' }}>© 2026 FieldSync. Todos os direitos reservados.</span>
         <span style={{ fontSize: 11, color: 'var(--text-dim)' }}>
           Criado por: <strong style={{ color: 'var(--text-muted)' }}>Hannya Cavalcante</strong>
