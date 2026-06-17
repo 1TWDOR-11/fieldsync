@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet,
-  ScrollView, Alert, ActivityIndicator, KeyboardAvoidingView,
-  Platform, StatusBar, SafeAreaView,
+  ScrollView, Alert, ActivityIndicator, SafeAreaView,
+  KeyboardAvoidingView, Platform, StatusBar,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import axios from 'axios';
@@ -11,15 +11,15 @@ import { useAuthContext } from '../hooks/useAuth';
 const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://fieldsync-api.onrender.com/api';
 
 const ROLES = [
-  { val: 'field',       icon: '🔧', label: 'Técnico de Campo',  hint: 'Executa tarefas em campo' },
+  { val: 'field',       icon: '🔧', label: 'Técnico de Campo',  hint: 'Executa tarefas no campo' },
   { val: 'coordinator', icon: '📋', label: 'Coordenador',        hint: 'Gerencia tarefas e equipes' },
 ];
 
-const FEATURES = [
-  { icon: '📋', title: 'Gestão de tarefas',          desc: 'Crie, atribua e priorize tarefas para cada técnico' },
-  { icon: '📷', title: 'Registro de ocorrências',    desc: 'Foto e descrição direto do celular, em campo' },
-  { icon: '📊', title: 'Dashboard analítico',        desc: 'Indicadores de progresso e pendências em tempo real' },
-  { icon: '📍', title: 'Rastreamento de atividades', desc: 'Visibilidade total de onde cada tarefa ocorre' },
+const BULLETS = [
+  'Gestão e priorização de tarefas por equipe',
+  'Rastreamento de status em tempo real',
+  'Registro de ocorrências com fotos',
+  'Indicadores e relatórios por projeto',
 ];
 
 export default function Login() {
@@ -53,85 +53,72 @@ export default function Login() {
 
   return (
     <SafeAreaView style={s.safe}>
-      <StatusBar barStyle="light-content" backgroundColor="#07101F" />
+      <StatusBar barStyle="light-content" backgroundColor="#0B1220" />
       <KeyboardAvoidingView
         style={s.kav}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView
-          contentContainerStyle={s.scroll}
-          keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
         >
 
-          {/* ════════════════════════════
-              1. LOGO
-          ════════════════════════════ */}
+          {/* ══════════════════════════════
+              LOGO
+          ══════════════════════════════ */}
           <View style={s.logoSection}>
-            <View style={s.logoBox}>
-              <Text style={s.logoSymbol}>∞</Text>
+            {/* Ícone — aproximação do SVG original */}
+            <View style={s.logoIconWrap}>
+              <View style={s.logoArc1} />
+              <View style={s.logoArc2} />
             </View>
-            <View style={s.logoText}>
-              <Text style={s.brandName}>FieldSync</Text>
-              <Text style={s.brandSub}>FIELD OPERATIONS PLATFORM</Text>
+            <View style={s.logoTextWrap}>
+              <Text style={s.logoName}>FieldSync</Text>
+              <Text style={s.logoSub}>FIELD OPERATIONS PLATFORM</Text>
             </View>
           </View>
 
-          {/* ════════════════════════════
-              2. HERO — textos informativos
-          ════════════════════════════ */}
+          {/* ══════════════════════════════
+              HERO — textos informativos
+          ══════════════════════════════ */}
           <View style={s.hero}>
-            <View style={s.heroBadge}>
-              <View style={s.heroBadgeDot} />
-              <Text style={s.heroBadgeText}>Plataforma de gestão em campo</Text>
+            {/* Label com linha decorativa */}
+            <View style={s.heroLabel}>
+              <View style={s.heroLabelLine} />
+              <Text style={s.heroLabelText}>Plataforma de gestão em campo</Text>
             </View>
 
             <Text style={s.heroTitle}>
               Visibilidade total para suas equipes em campo
             </Text>
+
             <Text style={s.heroDesc}>
-              Coordene tarefas, acompanhe o status em tempo real e registre ocorrências com foto — tudo integrado entre web e mobile.
+              Coordene tarefas, acompanhe o status em tempo real e registre ocorrências com foto, tudo em uma plataforma integrada entre web e mobile.
             </Text>
 
-            {/* Feature cards */}
-            {FEATURES.map(({ icon, title, desc }) => (
-              <View key={title} style={s.featureCard}>
-                <Text style={s.featureIcon}>{icon}</Text>
-                <View style={s.featureText}>
-                  <Text style={s.featureTitle}>{title}</Text>
-                  <Text style={s.featureDesc}>{desc}</Text>
-                </View>
-              </View>
-            ))}
-
-            {/* Stats */}
-            <View style={s.statsRow}>
-              {[['500+', 'Empresas'], ['12k', 'Tarefas/mês'], ['99.9%', 'Uptime']].map(([n, l], i) => (
-                <View
-                  key={l}
-                  style={[
-                    s.statItem,
-                    i < 2 && s.statItemBorder,
-                  ]}
-                >
-                  <Text style={s.statNum}>{n}</Text>
-                  <Text style={s.statLabel}>{l}</Text>
+            {/* Bullets */}
+            <View style={s.bulletList}>
+              {BULLETS.map(text => (
+                <View key={text} style={s.bulletRow}>
+                  <View style={s.bulletDot} />
+                  <Text style={s.bulletText}>{text}</Text>
                 </View>
               ))}
             </View>
           </View>
 
-          {/* ════════════════════════════
-              3. FORMULÁRIO
-          ════════════════════════════ */}
-          <View style={s.form}>
+          {/* ══════════════════════════════
+              FORMULÁRIO
+          ══════════════════════════════ */}
+          <View style={s.formSection}>
+
             <Text style={s.formTitle}>
               {mode === 'login' ? 'Acessar plataforma' : 'Criar conta'}
             </Text>
             <Text style={s.formSubtitle}>
               {mode === 'login'
-                ? 'Entre com suas credenciais para continuar'
-                : 'Preencha os dados para criar seu acesso'}
+                ? 'Entre com suas credenciais para continuar.'
+                : 'Preencha os dados abaixo para criar seu acesso.'}
             </Text>
 
             {/* Tabs */}
@@ -155,11 +142,11 @@ export default function Login() {
             {/* Nome */}
             {mode === 'register' && (
               <View style={s.field}>
-                <Text style={s.fieldLabel}>Nome completo</Text>
+                <Text style={s.label}>Nome completo</Text>
                 <TextInput
                   style={s.input}
                   placeholder="Seu nome completo"
-                  placeholderTextColor="#2E4A6A"
+                  placeholderTextColor="#3D4A5C"
                   value={form.name}
                   onChangeText={v => setForm(p => ({ ...p, name: v }))}
                   returnKeyType="next"
@@ -169,11 +156,11 @@ export default function Login() {
 
             {/* E-mail */}
             <View style={s.field}>
-              <Text style={s.fieldLabel}>E-mail</Text>
+              <Text style={s.label}>E-mail</Text>
               <TextInput
                 style={s.input}
                 placeholder="seu@email.com"
-                placeholderTextColor="#2E4A6A"
+                placeholderTextColor="#3D4A5C"
                 keyboardType="email-address"
                 autoCapitalize="none"
                 value={form.email}
@@ -184,8 +171,8 @@ export default function Login() {
 
             {/* Senha */}
             <View style={s.field}>
-              <View style={s.fieldLabelRow}>
-                <Text style={s.fieldLabel}>Senha</Text>
+              <View style={s.labelRow}>
+                <Text style={s.label}>Senha</Text>
                 {mode === 'login' && (
                   <Text style={s.forgotLink}>Esqueceu a senha?</Text>
                 )}
@@ -193,7 +180,7 @@ export default function Login() {
               <TextInput
                 style={s.input}
                 placeholder="••••••••"
-                placeholderTextColor="#2E4A6A"
+                placeholderTextColor="#3D4A5C"
                 secureTextEntry
                 value={form.password}
                 onChangeText={v => setForm(p => ({ ...p, password: v }))}
@@ -205,7 +192,7 @@ export default function Login() {
             {/* Cargos */}
             {mode === 'register' && (
               <View style={s.field}>
-                <Text style={s.fieldLabel}>Função na equipe</Text>
+                <Text style={s.label}>Função na equipe</Text>
                 <View style={s.roleRow}>
                   {ROLES.map(({ val, icon, label, hint }, i) => (
                     <TouchableOpacity
@@ -230,7 +217,7 @@ export default function Login() {
               </View>
             )}
 
-            {/* Botão principal */}
+            {/* Botão */}
             <TouchableOpacity
               style={[s.btn, loading && s.btnDisabled]}
               onPress={handleSubmit}
@@ -240,10 +227,17 @@ export default function Login() {
               {loading
                 ? <ActivityIndicator color="#fff" size="small" />
                 : <Text style={s.btnText}>
-                    {mode === 'login' ? 'Entrar na plataforma →' : 'Criar minha conta →'}
+                    {mode === 'login' ? 'Entrar na plataforma' : 'Criar minha conta'}
                   </Text>
               }
             </TouchableOpacity>
+
+            {/* Divider */}
+            <View style={s.divider}>
+              <View style={s.dividerLine} />
+              <Text style={s.dividerText}>ou</Text>
+              <View style={s.dividerLine} />
+            </View>
 
             {/* Trocar modo */}
             <View style={s.switchRow}>
@@ -257,19 +251,20 @@ export default function Login() {
                 }}
               >
                 <Text style={s.switchLink}>
-                  {mode === 'login' ? 'Criar conta' : 'Fazer login'}
+                  {mode === 'login' ? 'Criar conta grátis' : 'Fazer login'}
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
 
-          {/* ════════════════════════════
-              4. RODAPÉ
-          ════════════════════════════ */}
+          {/* ══════════════════════════════
+              RODAPÉ
+          ══════════════════════════════ */}
           <View style={s.footer}>
-            <View style={s.footerLine} />
-            <Text style={s.footerText}>© 2026 FieldSync. Todos os direitos reservados.</Text>
-            <Text style={s.footerCredit}>Criado por Hannya Cavalcante</Text>
+            <Text style={s.footerLeft}>© 2026 FieldSync. Todos os direitos reservados.</Text>
+            <Text style={s.footerRight}>
+              Criado por: <Text style={s.footerCreator}>Hannya Cavalcante</Text>
+            </Text>
           </View>
 
         </ScrollView>
@@ -278,234 +273,215 @@ export default function Login() {
   );
 }
 
-const DARK_BG   = '#07101F';
-const DARK_CARD = '#0E1E35';
-const DARK_INP  = '#0A1627';
-const BLUE      = '#1540A8';
-const BLUE_LT   = '#3B82F6';
+/* ────────────────────────────────────────
+   Cores idênticas ao web
+──────────────────────────────────────── */
+const BG_HERO   = '#0B1220';   // fundo do painel esquerdo web
+const BG_FORM   = '#12161C';   // var(--surface) dark
+const BG_INPUT  = '#0F1318';   // var(--bg-input) dark
+const BLUE      = '#2563EB';
 const TEAL      = '#0D9488';
-const TEXT_WH   = '#F1F5F9';
-const TEXT_MD   = '#94A3B8';
-const TEXT_DIM  = '#334155';
-const BORDER    = 'rgba(255,255,255,0.08)';
+const BORDER    = 'rgba(255,255,255,0.10)';
+const TEXT_STR  = '#E6E8EB';
+const TEXT_MUT  = '#8B92A0';
+const TEXT_DIM  = '#565E6B';
 
 const s = StyleSheet.create({
-  safe:  { flex: 1, backgroundColor: DARK_BG },
-  kav:   { flex: 1 },
-  scroll: { flexGrow: 1, backgroundColor: DARK_BG },
+  safe: { flex: 1, backgroundColor: BG_HERO },
+  kav:  { flex: 1 },
 
-  /* ── 1. Logo ── */
+  /* ── Logo ── */
   logoSection: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 24,
-    paddingTop: 48,
-    paddingBottom: 28,
-    backgroundColor: DARK_BG,
-  },
-  logoBox: {
-    width: 44, height: 44,
-    borderRadius: 12,
-    backgroundColor: BLUE,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  logoSymbol: { fontSize: 22, color: '#fff', fontWeight: '900' },
-  logoText:   { flex: 1 },
-  brandName:  { fontSize: 18, fontWeight: '800', color: TEXT_WH, letterSpacing: -0.3 },
-  brandSub:   { fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: 1.4, marginTop: 2 },
-
-  /* ── 2. Hero ── */
-  hero: {
-    backgroundColor: DARK_CARD,
-    paddingHorizontal: 24,
-    paddingTop: 28,
+    paddingTop: 44,
     paddingBottom: 32,
-    borderTopWidth: 1,
-    borderTopColor: BORDER,
-    borderBottomWidth: 1,
-    borderBottomColor: BORDER,
+    backgroundColor: BG_HERO,
   },
-  heroBadge: {
+  logoIconWrap: {
+    width: 32, height: 32,
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  /* Duas meias-luas aproximando o logo SVG */
+  logoArc1: {
+    position: 'absolute',
+    width: 18, height: 18,
+    borderRadius: 9,
+    borderWidth: 3,
+    borderColor: '#fff',
+    borderBottomColor: 'transparent',
+    borderRightColor: 'transparent',
+    top: 0, left: 0,
+  },
+  logoArc2: {
+    position: 'absolute',
+    width: 18, height: 18,
+    borderRadius: 9,
+    borderWidth: 3,
+    borderColor: '#fff',
+    borderTopColor: 'transparent',
+    borderLeftColor: 'transparent',
+    bottom: 0, right: 0,
+  },
+  logoTextWrap: { flex: 1 },
+  logoName: {
+    fontSize: 18, fontWeight: '700',
+    color: '#fff', letterSpacing: -0.2,
+  },
+  logoSub: {
+    fontSize: 9, color: 'rgba(255,255,255,0.4)',
+    letterSpacing: 1.2, marginTop: 1,
+  },
+
+  /* ── Hero ── */
+  hero: {
+    backgroundColor: BG_HERO,
+    paddingHorizontal: 24,
+    paddingBottom: 36,
+  },
+  heroLabel: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 18,
   },
-  heroBadgeDot: {
-    width: 6, height: 6,
-    borderRadius: 3,
+  heroLabelLine: {
+    width: 16, height: 1,
     backgroundColor: TEAL,
     marginRight: 8,
   },
-  heroBadgeText: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: TEAL,
-    letterSpacing: 0.8,
+  heroLabelText: {
+    fontSize: 11, fontWeight: '600',
+    color: TEAL, letterSpacing: 1,
     textTransform: 'uppercase',
   },
   heroTitle: {
-    fontSize: 22,
-    fontWeight: '800',
-    color: TEXT_WH,
-    lineHeight: 30,
-    letterSpacing: -0.4,
-    marginBottom: 12,
+    fontSize: 26, fontWeight: '700',
+    color: '#F1F3F6', lineHeight: 34,
+    letterSpacing: -0.5, marginBottom: 14,
   },
   heroDesc: {
-    fontSize: 13,
-    color: 'rgba(255,255,255,0.45)',
-    lineHeight: 20,
-    marginBottom: 24,
+    fontSize: 13, color: 'rgba(255,255,255,0.55)',
+    lineHeight: 20, marginBottom: 22,
   },
-  featureCard: {
+  bulletList: {},
+  bulletRow: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderWidth: 1,
-    borderColor: BORDER,
-    borderRadius: 12,
-    padding: 14,
-    marginBottom: 10,
-  },
-  featureIcon: { fontSize: 20, marginRight: 14, marginTop: 1 },
-  featureText: { flex: 1 },
-  featureTitle: {
-    fontSize: 13, fontWeight: '700',
-    color: TEXT_WH, marginBottom: 3,
-  },
-  featureDesc: {
-    fontSize: 12,
-    color: 'rgba(255,255,255,0.4)',
-    lineHeight: 17,
-  },
-  statsRow: {
-    flexDirection: 'row',
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderWidth: 1,
-    borderColor: BORDER,
-    borderRadius: 12,
-    overflow: 'hidden',
-    marginTop: 4,
-  },
-  statItem: {
-    flex: 1,
-    paddingVertical: 14,
     alignItems: 'center',
+    marginBottom: 12,
   },
-  statItemBorder: {
-    borderRightWidth: 1,
-    borderRightColor: BORDER,
+  bulletDot: {
+    width: 5, height: 5,
+    backgroundColor: TEAL,
+    marginRight: 10,
   },
-  statNum:   { fontSize: 18, fontWeight: '800', color: BLUE_LT, marginBottom: 3 },
-  statLabel: { fontSize: 10, color: 'rgba(255,255,255,0.35)', textAlign: 'center' },
+  bulletText: {
+    fontSize: 13,
+    color: 'rgba(255,255,255,0.6)',
+    flex: 1,
+  },
 
-  /* ── 3. Formulário ── */
-  form: {
-    backgroundColor: DARK_BG,
+  /* ── Formulário ── */
+  formSection: {
+    backgroundColor: BG_FORM,
+    borderTopWidth: 1,
+    borderTopColor: BORDER,
     paddingHorizontal: 24,
     paddingTop: 32,
     paddingBottom: 32,
   },
   formTitle: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: TEXT_WH,
-    letterSpacing: -0.5,
-    marginBottom: 6,
+    fontSize: 22, fontWeight: '700',
+    color: TEXT_STR, letterSpacing: -0.3,
+    textAlign: 'center', marginBottom: 6,
   },
   formSubtitle: {
-    fontSize: 13,
-    color: TEXT_MD,
-    lineHeight: 19,
+    fontSize: 13, color: TEXT_MUT,
+    textAlign: 'center', lineHeight: 19,
     marginBottom: 24,
   },
   tabs: {
     flexDirection: 'row',
-    backgroundColor: DARK_CARD,
-    borderRadius: 10,
-    padding: 4,
+    backgroundColor: BG_INPUT,
+    borderWidth: 1, borderColor: BORDER,
+    borderRadius: 4, padding: 3,
     marginBottom: 24,
-    borderWidth: 1,
-    borderColor: BORDER,
   },
   tab: {
-    flex: 1,
-    paddingVertical: 10,
-    borderRadius: 7,
-    alignItems: 'center',
+    flex: 1, paddingVertical: 9,
+    borderRadius: 3, alignItems: 'center',
   },
   tabActive: { backgroundColor: BLUE },
-  tabText:       { fontSize: 14, color: '#475569', fontWeight: '500' },
-  tabTextActive: { color: '#fff', fontWeight: '700' },
+  tabText:       { fontSize: 13, color: TEXT_MUT, fontWeight: '400' },
+  tabTextActive: { color: '#fff', fontWeight: '600' },
 
-  field:         { marginBottom: 18 },
-  fieldLabelRow: {
+  field:    { marginBottom: 16 },
+  labelRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 7,
+    marginBottom: 6,
   },
-  fieldLabel: {
-    fontSize: 12, fontWeight: '600',
-    color: TEXT_MD, letterSpacing: 0.2,
-    marginBottom: 7,
+  label: {
+    fontSize: 11, fontWeight: '600',
+    color: TEXT_MUT, letterSpacing: 0.5,
+    textTransform: 'uppercase', marginBottom: 6,
   },
-  forgotLink: { fontSize: 11, color: BLUE_LT },
+  forgotLink: { fontSize: 12, color: BLUE },
   input: {
-    backgroundColor: DARK_INP,
-    borderWidth: 1,
-    borderColor: BORDER,
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 13,
-    fontSize: 14,
-    color: TEXT_WH,
+    backgroundColor: BG_INPUT,
+    borderWidth: 1, borderColor: BORDER,
+    borderRadius: 4,
+    paddingHorizontal: 12, paddingVertical: 12,
+    fontSize: 14, color: TEXT_STR,
   },
 
-  roleRow:        { flexDirection: 'row' },
+  roleRow: { flexDirection: 'row' },
   roleBtn: {
-    flex: 1,
-    paddingVertical: 14,
-    paddingHorizontal: 10,
-    borderRadius: 10,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: BORDER,
-    backgroundColor: DARK_CARD,
+    flex: 1, paddingVertical: 12, paddingHorizontal: 10,
+    borderRadius: 4, alignItems: 'center',
+    borderWidth: 1, borderColor: BORDER,
+    backgroundColor: BG_INPUT,
   },
   roleBtnActive: {
-    borderColor: BLUE_LT,
-    backgroundColor: 'rgba(59,130,246,0.12)',
+    borderColor: BLUE,
+    backgroundColor: BG_FORM,
   },
-  roleIcon:      { fontSize: 22, marginBottom: 6 },
+  roleIcon: { fontSize: 20, marginBottom: 6 },
   roleName: {
-    fontSize: 12, color: TEXT_DIM,
-    fontWeight: '600', textAlign: 'center',
-    marginBottom: 3,
+    fontSize: 12, fontWeight: '600',
+    color: TEXT_MUT, textAlign: 'center',
+    marginBottom: 2,
   },
-  roleNameActive: { color: '#93C5FD' },
+  roleNameActive: { color: TEXT_STR },
   roleHint: {
-    fontSize: 10, color: '#1E3A5F',
+    fontSize: 10, color: TEXT_DIM,
     textAlign: 'center', lineHeight: 14,
   },
 
   btn: {
     backgroundColor: BLUE,
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginTop: 4,
-    marginBottom: 20,
-    shadowColor: BLUE_LT,
-    shadowOpacity: 0.35,
-    shadowRadius: 14,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 6,
+    paddingVertical: 13,
+    borderRadius: 4, alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 8, marginBottom: 20,
+    minHeight: 44,
   },
-  btnDisabled: { opacity: 0.65 },
-  btnText: { color: '#fff', fontWeight: '700', fontSize: 15 },
+  btnDisabled: { opacity: 0.7 },
+  btnText: { color: '#fff', fontWeight: '600', fontSize: 14 },
+
+  divider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 18,
+  },
+  dividerLine: { flex: 1, height: 1, backgroundColor: BORDER },
+  dividerText: {
+    fontSize: 12, color: TEXT_DIM,
+    marginHorizontal: 12,
+  },
 
   switchRow: {
     flexDirection: 'row',
@@ -513,22 +489,18 @@ const s = StyleSheet.create({
     alignItems: 'center',
   },
   switchText: { fontSize: 13, color: TEXT_DIM },
-  switchLink: { fontSize: 13, color: BLUE_LT, fontWeight: '700' },
+  switchLink: { fontSize: 13, color: TEAL, fontWeight: '600' },
 
-  /* ── 4. Rodapé ── */
+  /* ── Rodapé ── */
   footer: {
-    backgroundColor: DARK_CARD,
-    paddingVertical: 24,
-    paddingHorizontal: 24,
+    backgroundColor: BG_FORM,
+    borderTopWidth: 1, borderTopColor: BORDER,
+    paddingHorizontal: 24, paddingVertical: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: BORDER,
   },
-  footerLine: {
-    width: 36, height: 1,
-    backgroundColor: BORDER,
-    marginBottom: 12,
-  },
-  footerText:   { fontSize: 11, color: TEXT_DIM, textAlign: 'center', marginBottom: 4 },
-  footerCredit: { fontSize: 11, color: TEXT_DIM, textAlign: 'center' },
+  footerLeft:    { fontSize: 10, color: TEXT_DIM },
+  footerRight:   { fontSize: 10, color: TEXT_DIM },
+  footerCreator: { fontWeight: '600', color: TEXT_MUT },
 });
