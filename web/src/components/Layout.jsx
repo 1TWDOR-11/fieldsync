@@ -24,7 +24,9 @@ export default function Layout() {
   return (
     <div style={{ display: 'flex', alignItems: 'stretch', minHeight: '100vh' }}>
 
-      <aside className="sidebar">
+      <a href="#main-content" className="skip-link">Pular para o conteúdo principal</a>
+
+      <aside className="sidebar" aria-label="Navegação principal">
         <div className="sidebar-brand">
           <div className="sidebar-brand-icon">
             <Logo size={17} color="white" />
@@ -57,10 +59,10 @@ export default function Layout() {
           </button>
         </div>
 
-        <nav className="sidebar-nav">
+        <nav className="sidebar-nav" aria-label="Menu do sistema">
           <div className="sidebar-nav-label">Menu</div>
           {NAV.filter(({ coordOnly }) => !coordOnly || isCoord).map(({ to, label, Icon, end }) => (
-            <NavLink key={to} to={to} end={end} className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`}>
+            <NavLink key={to} to={to} end={end} className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`} aria-label={label}>
               {({ isActive }) => (
                 <>
                   <Icon size={15} color={isActive ? '#fff' : 'rgba(255,255,255,.4)'} />
@@ -85,7 +87,7 @@ export default function Layout() {
         </div>
       </aside>
 
-      <main style={{ flex: 1, overflowY: 'auto', padding: '32px 36px', minWidth: 0 }} id="main-content" tabIndex={-1}>
+      <main style={{ flex: 1, overflowY: 'auto', padding: '32px 36px', minWidth: 0 }} id="main-content" tabIndex={-1} role="main" aria-label="Conteúdo principal">
         <Outlet />
       </main>
     </div>

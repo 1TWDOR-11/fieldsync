@@ -8,7 +8,7 @@ import { useRouter } from 'expo-router';
 import axios from 'axios';
 import { useAuthContext } from '../hooks/useAuth';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://10.0.2.2:3001/api';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://fieldsync-api.onrender.com/api';
 
 export default function Login() {
   const { login } = useAuthContext();

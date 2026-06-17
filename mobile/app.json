@@ -17,6 +17,9 @@
       "package": "com.fieldsync.app"
     },
     "plugins": ["expo-router", "expo-secure-store"],
-    "scheme": "fieldsync"
+    "scheme": "fieldsync",
+    "extra": {
+      "apiUrl": "https://fieldsync-api.onrender.com/api"
+    }
   }
 }
