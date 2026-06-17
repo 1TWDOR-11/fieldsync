@@ -125,7 +125,7 @@ export default function Tasks() {
           <p className="text-dim" style={{ fontSize: 11, fontWeight: 600, letterSpacing: '.06em', textTransform: 'uppercase', marginBottom: 6 }}>Campo</p>
           <h1 style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-strong)', letterSpacing: '-0.5px' }}>Tarefas</h1>
         </div>
-        <div className="row gap-2" style={{ alignItems: 'center' }}>
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
           <div className="row" style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', padding: 2 }}>
             {[['list', IcLayers, 'Lista'], ['kanban', IcGrid, 'Kanban']].map(([val, Icon, label]) => (
               <button key={val} onClick={() => setView(val)} className="row gap-2" style={{
@@ -174,9 +174,9 @@ export default function Tasks() {
         </div>
       </header>
 
-      <div className="row gap-2">
+      <div className="row gap-2 pills-row">
         {pills.map(({ val, label, count }) => (
-          <button key={val} onClick={() => setFilter(val)} className="pill" aria-pressed={filter === val}>
+          <button key={val} onClick={() => setFilter(val)} className="pill" aria-pressed={filter === val} style={{ whiteSpace: 'nowrap' }}>
             {label}
             <span style={{ fontSize: 10, opacity: .7 }}>{count}</span>
           </button>
@@ -191,19 +191,21 @@ export default function Tasks() {
           )}
           {sorted.map((t) => (
             <article key={t.id} className="card anim-fade-up" onClick={() => openDetail(t)} style={{ padding: '16px 20px', cursor: 'pointer' }}>
-              <div className="row-between" style={{ alignItems: 'flex-start', gap: 16, flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, flexWrap: 'wrap' }}>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <h2 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-strong)', marginBottom: 4 }}>{t.title}</h2>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                    <h2 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-strong)', marginBottom: 4, flex: 1, minWidth: 0 }}>{t.title}</h2>
+                    <div style={{ display: 'flex', gap: 5, flexShrink: 0, flexWrap: 'wrap' }}>
+                      <span className="badge" style={{ color: S_COLOR[t.status], borderColor: S_COLOR[t.status] + '40', whiteSpace: 'nowrap' }}>{S_LABEL[t.status]}</span>
+                      <span className="badge" style={{ color: P_COLOR[t.priority], borderColor: P_COLOR[t.priority] + '40', whiteSpace: 'nowrap' }}>{P_LABEL[t.priority]}</span>
+                    </div>
+                  </div>
                   {t.description && <p className="text-muted" style={{ fontSize: 12, lineHeight: 1.5 }}>{t.description}</p>}
                   <div className="row gap-3" style={{ marginTop: 8, flexWrap: 'wrap' }}>
                     {t.assigned_name && <span className="row gap-1 text-dim" style={{ fontSize: 11, alignItems: 'center' }}><IcUser size={11} color="currentColor" />{t.assigned_name}</span>}
                     {t.location && <span className="row gap-1 text-dim" style={{ fontSize: 11, alignItems: 'center' }}><IcMapPin size={11} color="currentColor" />{t.location}</span>}
                     {t.due_date && <span className="row gap-1 text-dim" style={{ fontSize: 11, alignItems: 'center' }}><IcCalendar size={11} color="currentColor" />{t.due_date}</span>}
                   </div>
-                </div>
-                <div className="col gap-2" style={{ alignItems: 'flex-end' }}>
-                  <span className="badge" style={{ color: S_COLOR[t.status], borderColor: S_COLOR[t.status] + '40' }}>{S_LABEL[t.status]}</span>
-                  <span className="badge" style={{ color: P_COLOR[t.priority], borderColor: P_COLOR[t.priority] + '40' }}>{P_LABEL[t.priority]}</span>
                 </div>
               </div>
               <div className="row gap-2" style={{ marginTop: 12, flexWrap: 'wrap' }} onClick={e => e.stopPropagation()}>

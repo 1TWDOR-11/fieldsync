@@ -479,6 +479,16 @@ option { color: #14171C; background: #fff; }
   /* Modal full-width on mobile */
   .modal-overlay { padding: 10px !important; align-items: flex-end; }
   .modal { max-height: 92vh !important; border-radius: 8px 8px 0 0 !important; }
+
+  /* Prevent any child from causing horizontal page scroll */
+  .main-content-area { overflow-x: hidden; }
+
+  /* Pills wrap on small screens */
+  .pills-row { flex-wrap: wrap; }
+
+  /* Task/Occ card badges wrap below content on mobile */
+  .card-row-mobile { flex-wrap: wrap; }
+  .card-badges-mobile { flex-direction: row !important; align-items: center !important; width: 100%; justify-content: flex-start; gap: 6px; }
 }
 
 /* ══════════════════════════════════════════

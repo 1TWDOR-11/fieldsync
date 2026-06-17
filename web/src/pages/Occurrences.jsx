@@ -115,9 +115,9 @@ export default function Occurrences() {
         </div>
       )}
 
-      <div className="row gap-2">
+      <div className="row gap-2 pills-row">
         {pills.map(({ val, label, count }) => (
-          <button key={val} onClick={() => setFilter(val)} className="pill" aria-pressed={filter === val}>
+          <button key={val} onClick={() => setFilter(val)} className="pill" aria-pressed={filter === val} style={{ whiteSpace: 'nowrap' }}>
             {label}
             <span style={{ fontSize: 10, opacity: .7 }}>{count}</span>
           </button>
@@ -129,22 +129,30 @@ export default function Occurrences() {
           <div className="card" style={{ padding: '40px', textAlign: 'center', color: 'var(--text-dim)', fontSize: 14 }}>Nenhuma ocorrência encontrada.</div>
         )}
         {filtered.map(o => (
-          <article key={o.id} className="card anim-fade-up" onClick={() => openDetail(o)} style={{ padding: '14px 18px', cursor: 'pointer' }}>
-            <div className="row-between" style={{ alignItems: 'flex-start', gap: 14 }}>
-              <div className="row gap-3" style={{ flex: 1, minWidth: 0 }}>
-                <IcAlert size={15} color={S_COLOR[o.status]} />
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text-strong)' }}>{o.task_title || 'Ocorrência geral'}</div>
-                  <p className="text-muted" style={{ fontSize: 12, marginTop: 3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{o.description}</p>
-                  <div className="row gap-3" style={{ marginTop: 6 }}>
-                    <span className="text-dim" style={{ fontSize: 11 }}>por {o.user_name}</span>
-                    {o.assigned_name && <span className="row gap-1" style={{ fontSize: 11, color: TEAL, alignItems: 'center' }}><IcUser size={10} color={TEAL} /> {o.assigned_name}</span>}
-                  </div>
+          <article key={o.id} className="card anim-fade-up" onClick={() => openDetail(o)}
+            style={{ padding: '14px 18px', cursor: 'pointer', borderLeft: `3px solid ${S_COLOR[o.status]}` }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, flexWrap: 'wrap' }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 4 }}>
+                  <span className="badge" style={{ color: S_COLOR[o.status], borderColor: S_COLOR[o.status] + '40', whiteSpace: 'nowrap' }}>
+                    {S_LABEL[o.status]}
+                  </span>
+                  <span className="text-dim" style={{ fontSize: 11 }}>{new Date(o.created_at).toLocaleDateString('pt-BR')}</span>
                 </div>
-              </div>
-              <div className="col gap-2" style={{ alignItems: 'flex-end', flexShrink: 0 }}>
-                <span className="badge" style={{ color: S_COLOR[o.status], borderColor: S_COLOR[o.status] + '40' }}>{S_LABEL[o.status]}</span>
-                <span className="text-dim" style={{ fontSize: 11 }}>{new Date(o.created_at).toLocaleDateString('pt-BR')}</span>
+                <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text-strong)', marginBottom: 3 }}>
+                  {o.task_title || 'Ocorrência geral'}
+                </div>
+                <p className="text-muted" style={{ fontSize: 12, lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                  {o.description}
+                </p>
+                <div style={{ display: 'flex', gap: 12, marginTop: 6, flexWrap: 'wrap' }}>
+                  <span className="text-dim" style={{ fontSize: 11 }}>por {o.user_name}</span>
+                  {o.assigned_name && (
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, color: TEAL }}>
+                      <IcUser size={10} color={TEAL} /> {o.assigned_name}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </article>
