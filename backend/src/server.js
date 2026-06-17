@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const { initDb } = require('./db');
+const { db, initDb } = require('./db');
+const { seed } = require('./seed');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -48,6 +49,12 @@ app.use((err, req, res, _next) => {
   res.status(err.status || 500).json({ error: err.message || 'Erro interno do servidor' });
 });
 
-initDb().then(() => {
+initDb().then(async () => {
+  const { rows } = await db.execute('SELECT COUNT(*) as n FROM users');
+  if (Number(rows[0].n) === 0) {
+    console.log('Banco vazio — rodando seed inicial...');
+    await seed(db);
+    console.log('Seed concluído.');
+  }
   app.listen(PORT, () => console.log(`FieldSync API rodando na porta ${PORT}`));
 }).catch(err => { console.error('Falha ao inicializar DB:', err); process.exit(1); });
