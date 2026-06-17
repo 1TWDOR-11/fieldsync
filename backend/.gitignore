@@ -1,0 +1,4 @@
+node_modules/
+fieldsync.db
+uploads/
+.env
