@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../App';
 import { useTheme } from '../ThemeContext';
@@ -6,13 +6,13 @@ import Logo from '../Logo';
 import { IcGrid, IcTasks, IcAlert, IcUsers, IcSummary, IcReports, IcLogOut, IcSun, IcMoon, IcSettings } from './Icons';
 
 const NAV = [
-  { to: '/', label: 'Dashboard', Icon: IcGrid, end: true },
-  { to: '/summary', label: 'Resumo', Icon: IcSummary },
-  { to: '/tasks', label: 'Tarefas', Icon: IcTasks },
-  { to: '/occurrences', label: 'Ocorrências', Icon: IcAlert },
-  { to: '/reports', label: 'Relatórios', Icon: IcReports },
-  { to: '/users', label: 'Usuários', Icon: IcUsers, coordOnly: true },
-  { to: '/admin', label: 'Administração', Icon: IcSettings, coordOnly: true },
+  { to: '/',            label: 'Dashboard',     Icon: IcGrid,    end: true },
+  { to: '/summary',     label: 'Resumo',         Icon: IcSummary },
+  { to: '/tasks',       label: 'Tarefas',        Icon: IcTasks },
+  { to: '/occurrences', label: 'Ocorrências',    Icon: IcAlert },
+  { to: '/reports',     label: 'Relatórios',     Icon: IcReports },
+  { to: '/users',       label: 'Usuários',       Icon: IcUsers,   coordOnly: true },
+  { to: '/admin',       label: 'Administração',  Icon: IcSettings, coordOnly: true },
 ];
 
 export default function Layout() {
@@ -20,13 +20,37 @@ export default function Layout() {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const isCoord = user?.role === 'coordinator';
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  function closeSidebar() { setSidebarOpen(false); }
 
   return (
     <div style={{ display: 'flex', alignItems: 'stretch', minHeight: '100vh' }}>
 
       <a href="#main-content" className="skip-link">Pular para o conteúdo principal</a>
 
-      <aside className="sidebar" aria-label="Navegação principal">
+      {/* ── Header mobile (hamburguer) ── */}
+      <header className="mobile-header">
+        <div className="mobile-header-brand">
+          <div className="mobile-header-brand-icon">
+            <Logo size={14} color="white" />
+          </div>
+          <span className="mobile-header-name">FieldSync</span>
+        </div>
+        <button className="hamburger" onClick={() => setSidebarOpen(o => !o)} aria-label="Abrir menu">
+          <span /><span /><span />
+        </button>
+      </header>
+
+      {/* ── Backdrop (fecha sidebar no mobile) ── */}
+      <div
+        className={`sidebar-backdrop${sidebarOpen ? ' sidebar-open' : ''}`}
+        onClick={closeSidebar}
+        aria-hidden="true"
+      />
+
+      {/* ── Sidebar ── */}
+      <aside className={`sidebar${sidebarOpen ? ' sidebar-open' : ''}`} aria-label="Navegação principal">
         <div className="sidebar-brand">
           <div className="sidebar-brand-icon">
             <Logo size={17} color="white" />
@@ -38,7 +62,8 @@ export default function Layout() {
         </div>
 
         <div className="sidebar-userchip">
-          <NavLink to="/profile" title="Ver meu perfil" style={{ display: 'flex', alignItems: 'center', gap: 10, overflow: 'hidden', flex: 1, textDecoration: 'none' }}>
+          <NavLink to="/profile" title="Ver meu perfil" onClick={closeSidebar}
+            style={{ display: 'flex', alignItems: 'center', gap: 10, overflow: 'hidden', flex: 1, textDecoration: 'none' }}>
             <div className="sidebar-avatar" style={{ background: isCoord ? '#4F46E5' : '#0D9488' }}>
               {user?.name?.[0]?.toUpperCase()}
             </div>
@@ -62,7 +87,11 @@ export default function Layout() {
         <nav className="sidebar-nav" aria-label="Menu do sistema">
           <div className="sidebar-nav-label">Menu</div>
           {NAV.filter(({ coordOnly }) => !coordOnly || isCoord).map(({ to, label, Icon, end }) => (
-            <NavLink key={to} to={to} end={end} className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`} aria-label={label}>
+            <NavLink key={to} to={to} end={end}
+              className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`}
+              aria-label={label}
+              onClick={closeSidebar}
+            >
               {({ isActive }) => (
                 <>
                   <Icon size={15} color={isActive ? '#fff' : 'rgba(255,255,255,.4)'} />
@@ -87,7 +116,15 @@ export default function Layout() {
         </div>
       </aside>
 
-      <main style={{ flex: 1, overflowY: 'auto', padding: '32px 36px', minWidth: 0 }} id="main-content" tabIndex={-1} role="main" aria-label="Conteúdo principal">
+      {/* ── Conteúdo principal ── */}
+      <main
+        className="main-content-area"
+        style={{ flex: 1, overflowY: 'auto', padding: '32px 36px', minWidth: 0 }}
+        id="main-content"
+        tabIndex={-1}
+        role="main"
+        aria-label="Conteúdo principal"
+      >
         <Outlet />
       </main>
     </div>
